@@ -4,6 +4,15 @@
 from flask import Flask, render_template, request, jsonify
 import core.parser as parser
 import core.google_api as api_request
+import os
+
+
+# open file .env.txt for key api
+with open(".env.txt", "r") as file:
+    lines = file.readlines()
+for line in lines:
+    lg = line.split(" ")
+    os.environ[lg[0]] = lg[2]
 
 app = Flask(__name__)
 pars = parser.Parser()

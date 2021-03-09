@@ -6,15 +6,18 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import os
 
 
 class ApiGoogle:
 
-    KEY_GOOGLE = "AIzaSyBMvv2CQu2Wf7sQ8318cD6QOwzNiZmrT-8"
-    GOOGLE_PLACE_URL = (
-        "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
-    )
-    GOOGLE_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap"
+    def __init__(self):
+
+        self.KEY_GOOGLE = os.environ.get('API_GOOGLE')
+        self.GOOGLE_PLACE_URL = (
+            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+        )
+        self.GOOGLE_MAP_URL = "https://maps.googleapis.com/maps/api/staticmap"
 
     def google_place_request(self, key_word):
 
