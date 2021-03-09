@@ -1,0 +1,84 @@
+header, footer {
+    background-color: #b9e3e7;
+    flex-direction: column;
+    border: 1px solid #f3ecec;
+    padding : .5em;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.head {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+.accroche {
+    padding : 1em;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    background-color: #ececf3;
+    border: 1px solid #f3ecec;
+    padding : .5em;
+    font-size: 1.2em;
+
+}
+
+.tchat {
+    margin : 0 auto;
+    height : 480px;
+    overflow : auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.computer {
+    display: flex;
+    align-items: center;
+    background: #4040DD;
+    width: 35%;
+    margin-bottom: 14px;
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
+}
+
+.user {
+    align-self: flex-end;
+    background: #868686;
+    width: 35%;
+    margin-bottom: 14px;
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
+}
+#inp {
+    border-radius: 10px;
+}
+#enter {
+    border-radius: 10px;
+
+}
+
+.zone_button {
+    flex-direction: row;
+}
+.fontesome{
+    flex-direction: row;
+}
+
+.fab {
+    color : #f3ecec;
+    font-size: 1.2em;
+    border: 1px solid #f3ecec;
+    border-radius: 4em;
+    padding : .5em;
+}
+
+@media (max-width: 1200px) {
+    header, main, footer {
+
+    }
+}

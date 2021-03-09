@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>PapyBot</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename= 'image/ico_papy.png') }}" />
+
+</head>
+<body>
+
+<header>
+
+    <h1>Papy Bot</h1>
+
+    <div class="head">
+        <img class="logo" src="{{ url_for('static', filename= 'image/img_papy_2.png') }}" />
+        <div class="accroche">
+        <p class="mt-5">Papy Bot connait pratiquement tout sur tout, demande lui de te trouver un lieu pour voir.</p>
+        </div>
+
+    </div>
+</header>
+
+    <main>
+        <div class="tchat" id="tchat">
+            <div class="computer">Bonjour mon poussin, que voudrais-tu savoir aujourd'hui ?</div>
+
+        </div>
+        <div class="zone_button">
+            <input id="inp" onkeydown="pressEnter(event)">
+            <input type="button" id="enter" onclick="check_text()" value="envoyer" >
+        </div>
+    </main>
+
+    <footer>
+        <p> Ce site a été réalisé avec Html, css et Javascript.
+        <br>  &copy; 2021 COMBES Jérémy, tous droits réservés. </p>
+        <div class="fontesome">
+            <a href="https://github.com/Walrick/Projet_7-Grand_Py" target="_blank"> <i class="fab fa-github"></i> </a>
+            <a href="https://www.linkedin.com/in/jeremy-combes-340/" target="_blank"> <i class="fab fa-linkedin"></i> </a>
+        </div>
+    </footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script src="{{ url_for('static', filename= 'js/script.js') }}"></script>
+
+</body>
+</html>
