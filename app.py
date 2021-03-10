@@ -33,7 +33,8 @@ def get_ajax():
     key_word = pars.research_extractor(msg)
     text = api_google.google_place_request(key_word)
     url_image = api_google.google_map_request(text["formatted_address"])
-    wiki = api_wiki.wikipedia_request(text["geometry"]["location"]["lat"], text["geometry"]["location"]["lng"])
+    wikip = api_wiki.wiki_geosearch(text["geometry"]["location"]["lat"], text["geometry"]["location"]["lng"])
+    wikim = api_wiki.wiki_get_text(wikip["query"]["geosearch"][0]["title"])
     text_parser = (
         "Mots clés de la recherche : "
         + key_word
@@ -43,8 +44,8 @@ def get_ajax():
         + text["name"]
         + ", les coordonnées sont : lat : "
         + str(text["geometry"]["location"]["lat"]) + " lng : " + str(text["geometry"]["location"]["lng"])
-        + ", résultat sur wikipedia: titre: " + wiki["query"]["geosearch"][0]["title"]
-        + ", distance cible : " + str(wiki["query"]["geosearch"][0]["dist"])
+        + ", résultat sur wikipedia: titre: " + wikip["query"]["geosearch"][0]["title"]
+        + ", distance cible : " + str(wikip["query"]["geosearch"][0]["dist"])
     )
 
     return jsonify(status=text_parser, image=url_image)

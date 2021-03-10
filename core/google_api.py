@@ -10,10 +10,9 @@ import os
 
 
 class ApiGoogle:
-
     def __init__(self):
 
-        self.KEY_GOOGLE = os.environ.get('API_GOOGLE')
+        self.KEY_GOOGLE = os.environ.get("API_GOOGLE")
         self.GOOGLE_PLACE_URL = (
             "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
         )

@@ -26,7 +26,7 @@ class Parser:
         if index == "NONE":
             self.research = self.text_list
         else:
-            self.research = self.text_list[(index + 1):]
+            self.research = self.text_list[(index + 1) :]
 
         return " ".join(self.research)
 
