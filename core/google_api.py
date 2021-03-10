@@ -26,7 +26,7 @@ class ApiGoogle:
             {
                 "input": f"{key_word}",
                 "inputtype": "textquery",
-                "fields": "formatted_address,name",
+                "fields": "formatted_address,name,geometry",
                 "key": self.KEY_GOOGLE,
             }
         )
@@ -69,7 +69,7 @@ class ApiGoogle:
             {
                 "center": f"{key_word}",
                 # 10 = zoom sur la ville, 15 = zoom sur la rue, 20 = zoom sur le bâtiment
-                "zoom": "14",
+                "zoom": "13.5",
                 "size": "300x300",
                 "markers": "red" + f"{key_word}",
                 "key": self.KEY_GOOGLE,
