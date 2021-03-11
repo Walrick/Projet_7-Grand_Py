@@ -56,7 +56,7 @@ class Parser:
     @staticmethod
     def find_index_research(text, address_word_list):
         """
-        The find_index_resear method searches for a keyword contained in the list address_word_list
+        The find_index_research method searches for a keyword contained in the list address_word_list
         :param text: list
         :param address_word_list: list
         :return: index_address (int or "NONE")
