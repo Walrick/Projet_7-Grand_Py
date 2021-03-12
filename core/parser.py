@@ -38,8 +38,9 @@ class Parser:
         text_list_raw_s = self.remove_space(text_list_raw_p)
         text_str = " ".join(text_list_raw_s)
         text_list = self.change_type(text_str)
+        text_list_raw = self.remove_special(text_list)
 
-        return text_list
+        return text_list_raw
 
     @staticmethod
     def change_type(text):
@@ -124,4 +125,30 @@ class Parser:
 
     @staticmethod
     def remove_special(text):
+        """
+        The remove_special method removes the word type ..., {{word, word, word}}, ...
+        :param text: list
+        :return: text (list)
+        """
+        index_start = []
+        index_end = []
+        index = 0
+        for word in text:
+            if "{{" in word:
+                index_start.append(index)
+            if "}}" in word:
+                index_end.append(index)
+            index += 1
+
+        index_start.reverse()
+        index_end.reverse()
+
+        if len(index_start) == len(index_end):
+            nb_index = len(index_start)
+            for i in range(0, nb_index):
+                if index_start[i] == index_end[i]:
+                    del text[index_start[i]]
+                else:
+                    del text[index_start[i]:index_end[i]+1]
+
         return text

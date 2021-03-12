@@ -23,7 +23,7 @@ def param_text_list():
         "connais",
         "l'adresse",
         "d'OpenClassrooms",
-        "?",
+        "?"
     ]
 
 
@@ -49,7 +49,9 @@ def param_text_wiki():
 
 @pytest.fixture
 def param_text_special():
-    return ["La", "ligne", "{{Tramway", "d'Île-de-France/correspondances",  "avec", "intitulé|3b}}", "du", "tramway", "passe", "sur", "ce", "quai."]
+    return [["La", "ligne", "{{Tramway", "d'Île-de-France/correspondances",  "avec", "intitulé|3b}}", "du", "tramway", "passe", "sur", "ce", "quai."],
+            ["{{Tramway}}","La", "ligne", "{{Tramway", "d'Île-de-France/correspondances", "avec", "intitulé|3b}}", "du", "tramway",
+             "passe", "sur", "ce", "quai."]]
 
 class TestParser:
     parser = parser_file.Parser()
@@ -99,7 +101,10 @@ class TestParser:
         ]
 
     def test_remove_special(self, param_text_special):
-        text = self.parser.remove_special(param_text_special)
+        text = self.parser.remove_special(param_text_special[0])
+        assert text == ["La", "ligne", "du", "tramway", "passe", "sur", "ce", "quai."]
+
+        text = self.parser.remove_special(param_text_special[1])
         assert text == ["La", "ligne", "du", "tramway", "passe", "sur", "ce", "quai."]
 
     def test_research_extractor(self, param_text):
