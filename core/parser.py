@@ -36,9 +36,10 @@ class Parser:
         text_list = self.change_type(text_raw[2])
         text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
         text_list_raw_s = self.remove_space(text_list_raw_p)
+        text_str = " ".join(text_list_raw_s)
+        text_list = self.change_type(text_str)
 
-
-        return text_list_raw_s
+        return text_list
 
     @staticmethod
     def change_type(text):
@@ -120,3 +121,7 @@ class Parser:
             if word != "":
                 text_finish.append(word)
         return text_finish
+
+    @staticmethod
+    def remove_special(text):
+        return text
