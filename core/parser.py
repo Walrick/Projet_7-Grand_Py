@@ -152,3 +152,7 @@ class Parser:
                     del text[index_start[i]:index_end[i]+1]
 
         return text
+
+    @staticmethod
+    def arranger_punctuation(text):
+        return text

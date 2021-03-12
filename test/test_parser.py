@@ -42,6 +42,22 @@ def param_text_list_space():
         "?",
     ]
 
+@pytest.fixture
+def param_text_list_punctuation():
+    return [
+        "Salut ",
+        "GrandPy",
+        ".",
+        "Est-ce",
+        "que",
+        ","
+        "tu",
+        "connais",
+        "l'adresse",
+        "d'OpenClassrooms",
+        "?",
+    ]
+
 
 @pytest.fixture
 def param_text_wiki():
@@ -106,6 +122,19 @@ class TestParser:
 
         text = self.parser.remove_special(param_text_special[1])
         assert text == ["La", "ligne", "du", "tramway", "passe", "sur", "ce", "quai."]
+
+    def test_arranger_punctuation(self, param_text_list_punctuation):
+        text = self.parser.arranger_punctuation(param_text_list_punctuation)
+        assert text == [
+            "Salut ",
+            "GrandPy.",
+            "Est-ce",
+            "que,",
+            "tu",
+            "connais",
+            "l'adresse",
+            "d'OpenClassrooms?"
+        ]
 
     def test_research_extractor(self, param_text):
         research = self.parser.research_extractor(param_text)
