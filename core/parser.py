@@ -9,6 +9,7 @@ class Parser:
         self.stop_word = stop_word.STOP_WORD
         self.address = stop_word.ADDRESS
         self.punctuation = stop_word.PUNCTUATION
+        self.stop_wiki = stop_word.PARSER_WIKI
         self.text_list = self.raw_text = []
         self.research = ""
 
@@ -19,7 +20,7 @@ class Parser:
         :return: text (str)
         """
         text_list = self.change_type(text)
-        text_list_raw_p = self.remove_punctuation(text_list, self.punctuation)
+        text_list_raw_p = self.remove_letter(text_list, self.punctuation)
         text_list_raw_s = self.remove_space(text_list_raw_p)
         self.text_list = self.remove_stop_word(text_list_raw_s, self.stop_word)
         index = self.find_index_research(self.text_list, self.address)
@@ -29,6 +30,15 @@ class Parser:
             self.research = self.text_list[(index + 1) :]
 
         return " ".join(self.research)
+
+    def text_wiki(self, text):
+        text_raw = text.split("==")
+        text_list = self.change_type(text_raw[2])
+        text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
+        text_list_raw_s = self.remove_space(text_list_raw_p)
+
+
+        return text_list_raw_s
 
     @staticmethod
     def change_type(text):
@@ -70,18 +80,18 @@ class Parser:
         return index_address
 
     @staticmethod
-    def remove_punctuation(text, ponctuation_list):
+    def remove_letter(text, letter_list):
         """
-        The remove_punctuation method removes the characters contained in the punctuation_list
+        The remove_letter method removes the characters contained in the letter_list
         :param text: list
-        :param ponctuation_list: list
+        :param letter_list: list
         :return: text_finish (list)
         """
         text_finish = []
         for word in text:
             word_list = []
             for letter in word:
-                if letter in ponctuation_list:
+                if letter in letter_list:
                     word_list.append(" ")
                 else:
                     word_list.append(letter)
@@ -98,11 +108,15 @@ class Parser:
         :return: text_finish (list)
         """
         text_finish = []
+        text_raw = []
         for word in text:
             if " " in word:
                 word_list = word.split(" ")
                 for i in word_list:
-                    text_finish.append(i)
+                    text_raw.append(i)
             else:
+                text_raw.append(word)
+        for word in text_raw :
+            if word != "":
                 text_finish.append(word)
         return text_finish

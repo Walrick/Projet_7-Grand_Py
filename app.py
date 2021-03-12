@@ -35,7 +35,8 @@ def get_ajax():
     url_image = api_google.google_map_request(text["formatted_address"])
     wikip = api_wiki.wiki_geosearch(text["geometry"]["location"]["lat"], text["geometry"]["location"]["lng"])
     wikim = api_wiki.wiki_get_text(wikip["query"]["geosearch"][0]["title"])
-
+    text_wiki = pars.text_wiki(wikim["parse"]["wikitext"])
+    print(text_wiki)
     text_parser = (
         "Mots clés de la recherche : "
         + key_word
