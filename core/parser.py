@@ -32,15 +32,24 @@ class Parser:
         return " ".join(self.research)
 
     def text_wiki(self, text):
+        """
+        the text_wiki method searches for the text to display from the return of the wikipedia API
+        :param text: str
+        :return: str
+        """
+        # découpe le fichier apres les ==
         text_raw = text.split("==")
+        # sélectionne le texte n°2
         text_list = self.change_type(text_raw[2])
+
         text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
         text_list_raw_s = self.remove_space(text_list_raw_p)
         text_str = " ".join(text_list_raw_s)
         text_list = self.change_type(text_str)
         text_list_raw = self.remove_special(text_list)
-
-        return text_list_raw
+        text_list = self.arranger_punctuation(text_list_raw)
+        text_finish = " ".join(text_list)
+        return text_finish
 
     @staticmethod
     def change_type(text):
@@ -118,7 +127,7 @@ class Parser:
                     text_raw.append(i)
             else:
                 text_raw.append(word)
-        for word in text_raw :
+        for word in text_raw:
             if word != "":
                 text_finish.append(word)
         return text_finish
@@ -149,10 +158,32 @@ class Parser:
                 if index_start[i] == index_end[i]:
                     del text[index_start[i]]
                 else:
-                    del text[index_start[i]:index_end[i]+1]
+                    del text[index_start[i] : index_end[i] + 1]
 
         return text
 
     @staticmethod
     def arranger_punctuation(text):
+        """
+        The arranger_punctuation method arranges the punctuation
+        :param text: list
+        :return: text (list)
+        """
+
+        punctuation = [".", ","]
+        index_word = []
+        index = 0
+        for word in text:
+            if word in punctuation:
+                if len(word) == 1:
+                    index_word.append(index)
+            index += 1
+
+        index_word.reverse()
+
+        for i in index_word:
+            word = text[i - 1] + text[i]
+            text[i - 1] = word
+            del text[i]
+
         return text

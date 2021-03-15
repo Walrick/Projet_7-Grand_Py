@@ -40,7 +40,8 @@ class ApiWiki:
             else:
                 # If we didn't get an IOError then parse the result.
                 result = json.load(response)
-                print(result)
+                #         print(result)
+
                 return result
 
             if current_delay > max_delay:
@@ -79,7 +80,6 @@ class ApiWiki:
             else:
                 # If we didn't get an IOError then parse the result.
                 result = json.load(response)
-                print(result)
                 return result
 
             if current_delay > max_delay:
