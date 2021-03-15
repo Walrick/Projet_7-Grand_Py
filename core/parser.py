@@ -29,6 +29,7 @@ class Parser:
         else:
             self.research = self.text_list[(index + 1) :]
 
+
         return " ".join(self.research)
 
     def text_wiki(self, text):
