@@ -2,7 +2,6 @@
 # -*- coding: utf8 -*-
 
 import core.stop_word as stop_word
-import wikitextparser
 
 
 class Parser:

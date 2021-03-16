@@ -79,18 +79,6 @@ main {
     padding : .5em;
 }
 
-@media (max-width: 1200px) {
-    header, main, footer {
-
-    }
-}
-
-#test {
-    flex-grow: 1;
-    transform-origin: 50% 50%;
-}
-
-
 @-webkit-keyframes rotating {
     from{
         -webkit-transform: rotate(0deg);
@@ -100,6 +88,8 @@ main {
     }
 }
 
-.rotating {
+.spinner {
+    flex-grow: 0.2;
+    transform-origin: 50% 50%;
     -webkit-animation: rotating 2s linear infinite;
 }
