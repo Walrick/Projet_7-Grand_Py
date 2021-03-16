@@ -31,7 +31,6 @@ class ApiGoogle:
         )
 
         url = f"{self.GOOGLE_PLACE_URL}?{params}"
-        print(url)
 
         current_delay = 0.1  # Set the initial retry delay to 100ms.
         max_delay = 5  # Set the maximum retry delay to 5 seconds.
@@ -45,7 +44,6 @@ class ApiGoogle:
             else:
                 # If we didn't get an IOError then parse the result.
                 result = json.load(response)
-                print(result)
                 if result["status"] == "OK":
                     return result["candidates"][0]
                 elif result["status"] != "UNKNOWN_ERROR":
@@ -76,5 +74,4 @@ class ApiGoogle:
         )
 
         url = f"{self.GOOGLE_MAP_URL}?{params}"
-        print(url)
         return url

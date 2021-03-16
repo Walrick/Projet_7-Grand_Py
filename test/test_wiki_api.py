@@ -26,7 +26,7 @@ def http_return_wikigeo(mocker):
             ]
         },
     }
-    url_test = mocker.patch(
+    return mocker.patch(
         "urllib.request.urlopen", return_value=BytesIO(json.dumps(results).encode())
     )
 
@@ -41,7 +41,7 @@ def http_return_wiki_text(mocker):
         }
     }
 
-    url_test = mocker.patch(
+    return mocker.patch(
         "urllib.request.urlopen", return_value=BytesIO(json.dumps(results).encode())
     )
 
@@ -51,9 +51,17 @@ class TestApiWiki:
     api_wiki = api_wiki.ApiWiki()
 
     def test_wiki_geosearch(self, http_return_wikigeo):
-        result = self.api_wiki.wiki_geosearch(48.89709, 2.38588)
+        result = self.api_wiki.wiki_geosearch(777, 999)
         assert result["query"]["geosearch"][0]["title"] == "Quai de la Gironde"
+
+        http_return_wikigeo.assert_called_once_with(
+            "https://fr.wikipedia.org/w/api.php?format=json&list=geosearch&gscoord=777%7C999&gslimit=10&gsradius=10000&action=query"
+        )
 
     def test_wiki_get_text(self, http_return_wiki_text):
         result = self.api_wiki.wiki_get_text("title")
         assert result["parse"]["title"] == "Quai de la Gironde"
+
+        http_return_wiki_text.assert_called_once_with(
+            "https://fr.wikipedia.org/w/api.php?action=parse&prop=wikitext&page=title&formatversion=2&format=json"
+        )

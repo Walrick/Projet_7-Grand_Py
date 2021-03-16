@@ -26,7 +26,6 @@ class ApiWiki:
             }
         )
         url = f"{self.WIKIPEDIA_URL}?{params}"
-        print(url)
 
         current_delay = 0.1  # Set the initial retry delay to 100ms.
         max_delay = 5  # Set the maximum retry delay to 5 seconds.
@@ -35,13 +34,12 @@ class ApiWiki:
             try:
                 # Get the API response.
                 response = urllib.request.urlopen(url)
+
             except urllib.error.URLError:
                 pass  # Fall through to the retry loop.
             else:
                 # If we didn't get an IOError then parse the result.
                 result = json.load(response)
-                #         print(result)
-
                 return result
 
             if current_delay > max_delay:
@@ -66,7 +64,6 @@ class ApiWiki:
             }
         )
         url = f"{self.WIKIPEDIA_URL}?{params}"
-        print(url)
 
         current_delay = 0.1  # Set the initial retry delay to 100ms.
         max_delay = 5  # Set the maximum retry delay to 5 seconds.

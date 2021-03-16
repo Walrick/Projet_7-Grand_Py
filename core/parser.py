@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 
 import core.stop_word as stop_word
+import wikitextparser
 
 
 class Parser:
@@ -29,7 +30,6 @@ class Parser:
         else:
             self.research = self.text_list[(index + 1) :]
 
-
         return " ".join(self.research)
 
     def text_wiki(self, text):
@@ -41,8 +41,9 @@ class Parser:
         # découpe le fichier apres les ==
         text_raw = text.split("==")
         # sélectionne le texte n°2
-        text_list = self.change_type(text_raw[2])
+        index_section = 2
 
+        text_list = self.change_type(text_raw[index_section])
         text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
         text_list_raw_s = self.remove_space(text_list_raw_p)
         text_str = " ".join(text_list_raw_s)
@@ -50,6 +51,17 @@ class Parser:
         text_list_raw = self.remove_special(text_list)
         text_list = self.arranger_punctuation(text_list_raw)
         text_finish = " ".join(text_list)
+        if text_finish != "":
+            return text_finish
+        else:
+            text_list = self.change_type(text_raw[index_section + 2])
+            text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
+            text_list_raw_s = self.remove_space(text_list_raw_p)
+            text_str = " ".join(text_list_raw_s)
+            text_list = self.change_type(text_str)
+            text_list_raw = self.remove_special(text_list)
+            text_list = self.arranger_punctuation(text_list_raw)
+            text_finish = " ".join(text_list)
         return text_finish
 
     @staticmethod
@@ -140,6 +152,7 @@ class Parser:
         :param text: list
         :return: text (list)
         """
+        # TODO prendre en compte si une "|" est présent pour l'ajouter au texte
         index_start = []
         index_end = []
         index = 0

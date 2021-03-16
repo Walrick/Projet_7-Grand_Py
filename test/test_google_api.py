@@ -32,7 +32,7 @@ def http_return(mocker):
         ],
         "status": "OK",
     }
-    url_test = mocker.patch(
+    return mocker.patch(
         "urllib.request.urlopen", return_value=BytesIO(json.dumps(results).encode())
     )
 
@@ -44,4 +44,7 @@ class TestApiGoogle:
         result = self.api_google.google_place_request("test au hasard")
         assert (
             result["formatted_address"] == "10 Quai de la Charente, 75019 Paris, France"
+        )
+        http_return.assert_called_once_with(
+            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=test+au+hasard&inputtype=textquery&fields=formatted_address%2Cname%2Cgeometry&key=None"
         )
