@@ -1,4 +1,5 @@
 
+let request_in_progress = "False" ;
 
 function pressEnter(event) {
     let code = event.keyCode;
@@ -11,7 +12,14 @@ function check_text() {
     let phrase = document.getElementById("inp").value;
     if (phrase != "" & phrase != " ") {
         document.getElementById("inp").value = "";
-        update_user(phrase)
+        if (request_in_progress === "False") {
+            update_user(phrase)
+            request_in_progress = "True"
+        }
+        else {
+            document.getElementById("inp").value = "Papy réfléchi encore a une réponse";
+        }
+
     }
 }
 
@@ -24,6 +32,8 @@ function request_ajax(data_txt) {
         update_papy_text(result.status)
         update_papy_image(result.image)
         spinner_off()
+        request_in_progress = "False"
+        document.getElementById("inp").value = "";
     }});/*$.ajax*/
 }
 
@@ -33,7 +43,7 @@ function spinner_on() {
     newDiv.className = "spinner";
     newDiv.id = "spinner";
     let center = document.createElement("center");
-    newContent = document.createTextNode("/");
+    let newContent = document.createTextNode("/");
     center.appendChild(newContent);
     newDiv.appendChild(center);
 
@@ -46,12 +56,13 @@ function spinner_off(){
     let zone_buttonDiv = document.getElementById('zone_button');
     zone_buttonDiv.removeChild(spinnerDiv);
 }
+
 function update_user(text) {
     spinner_on()
     request_ajax(text);
     let newDiv = document.createElement("div");
     newDiv.className = "user";
-    newContent = document.createTextNode(text);
+    let newContent = document.createTextNode(text);
     newDiv.appendChild(newContent);
 
     let currentDiv = document.getElementById('tchat');
@@ -62,7 +73,7 @@ function update_user(text) {
 function update_papy_text(text) {
     let newDiv = document.createElement("div");
     newDiv.className = "computer";
-    newContent = document.createTextNode(text);
+    let newContent = document.createTextNode(text);
     newDiv.appendChild(newContent);
 
     let currentDiv = document.getElementById('tchat');
