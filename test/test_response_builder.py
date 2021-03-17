@@ -20,7 +20,3 @@ class TestPapy:
         text = self.papy.build_address(address)
         text_part = text.split(",")
         assert text_part[0] in static.GRANDPA_START_ADDRESS
-
-
-
-

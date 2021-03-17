@@ -20,6 +20,9 @@ class Papy:
         self.NB_GRANDPA_MEDIUM_ADDRESS = len(static.GRANDPA_MEDIUM_ADDRESS) - 1
         self.NB_GRANDPA_END_ADDRESS = len(static.GRANDPA_END_ADDRESS) - 1
 
+        self.NB_GRANDPA_START_WIKI = len(static.GRANDPA_START_WIKI) - 1
+        self.NB_GRANDPA_MEDIUM_WIKI = len(static.GRANDPA_MEDIUM_WIKI) - 1
+
     def request(self, text):
 
         # keyword research
@@ -75,14 +78,29 @@ class Papy:
 
     def build_wiki(self, lat, lng):
 
+        index_start = random.randint(0, self.NB_GRANDPA_START_WIKI)
+        index_medium = random.randint(0, self.NB_GRANDPA_MEDIUM_WIKI)
+
         # wiki answer
         wiki_p = self.wiki_api.wiki_geosearch(lat, lng)
         wiki_t = self.wiki_api.wiki_get_text(wiki_p["query"]["geosearch"][0]["title"])
 
-        distance = wiki_p["query"]["geosearch"][0]["dist"]
+        distance = str(wiki_p["query"]["geosearch"][0]["dist"])
         title = wiki_p["query"]["geosearch"][0]["title"]
 
         # Parse the text
         text_wiki = self.parser.text_wiki(wiki_t["parse"]["wikitext"])
 
-        return text_wiki
+        text = (
+            static.GRANDPA_START_WIKI[index_start]
+            + " "
+            + title
+            + ", "
+            + static.GRANDPA_MEDIUM_WIKI[index_medium]
+            + " "
+            + distance
+            + " m, "
+            + text_wiki
+        )
+
+        return text

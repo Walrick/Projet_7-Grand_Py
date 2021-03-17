@@ -631,3 +631,10 @@ GRANDPA_WELCOME_PHRASE = ["Bonjour mon poussin, que voudrais-tu savoir aujourd'h
 GRANDPA_START_ADDRESS = ["Bien mon poussin", "Ok ma caille", "Voilà mon petit"]
 GRANDPA_MEDIUM_ADDRESS = ["se trouve", "est", "se situe"]
 GRANDPA_END_ADDRESS = ["Observe la zone", "Regarde la carte", "Je te montre"]
+
+GRANDPA_START_WIKI = [
+    "Tiens cela me fait penser, tu verras",
+    "D'ailleurs si je me trompe pas, tu peux observer",
+    "Pour le coup, dans la zone se trouve",
+]
+GRANDPA_MEDIUM_WIKI = ["à environ", "a peu pres à"]
