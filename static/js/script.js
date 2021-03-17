@@ -25,12 +25,13 @@ function check_text() {
 
 function request_ajax(data_txt) {
     $.ajax({
-    url: '/test_ajax/',
+    url: '/request_ajax/',
     type : 'GET',
-    data: {'variable' : data_txt},
+    data: {'request_user' : data_txt},
     success : function(result) {
-        update_papy_text(result.status)
+        update_papy_text(result.address)
         update_papy_image(result.image)
+        update_papy_text(result.history)
         spinner_off()
         request_in_progress = "False"
         document.getElementById("inp").value = "";

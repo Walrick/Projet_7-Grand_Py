@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf8 -*-
 
-import core.stop_word as stop_word
+import core.static as stop_word
 
 
 class Parser:

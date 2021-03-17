@@ -624,3 +624,10 @@ ADDRESS = [
 PUNCTUATION = ["!", "?", ",", ".", ";", ":", "'"]
 
 PARSER_WIKI = ["[", "]", "|", "\n"]
+
+# TODO a terminer quand le site sera fonctionnel
+GRANDPA_WELCOME_PHRASE = ["Bonjour mon poussin, que voudrais-tu savoir aujourd'hui ?"]
+
+GRANDPA_START_ADDRESS = ["Bien mon poussin", "Ok ma caille", "Voilà mon petit"]
+GRANDPA_MEDIUM_ADDRESS = ["se trouve", "est", "se situe"]
+GRANDPA_END_ADDRESS = ["Observe la zone", "Regarde la carte", "Je te montre"]
