@@ -24,6 +24,11 @@ class Papy:
         self.NB_GRANDPA_MEDIUM_WIKI = len(static.GRANDPA_MEDIUM_WIKI) - 1
 
     def request(self, text):
+        """
+        The request methods respond at the question of user
+        :param text: str
+        :return: address (str), url_image (str), text_wiki (str)
+        """
 
         # keyword research
         key_word = self.parser.research_extractor(text)
@@ -56,6 +61,12 @@ class Papy:
             return address, url_image, text_wiki
 
     def build_address(self, address, name):
+        """
+        The build_address methods build the response of address
+        :param address:
+        :param name:
+        :return:
+        """
 
         index_start = random.randint(0, self.NB_GRANDPA_START_ADDRESS)
         index_medium = random.randint(0, self.NB_GRANDPA_MEDIUM_ADDRESS)
@@ -77,6 +88,12 @@ class Papy:
         return text
 
     def build_wiki(self, lat, lng):
+        """
+        The build_wiki methods build the response of wiki
+        :param lat: str
+        :param lng: str
+        :return: str
+        """
 
         index_start = random.randint(0, self.NB_GRANDPA_START_WIKI)
         index_medium = random.randint(0, self.NB_GRANDPA_MEDIUM_WIKI)
