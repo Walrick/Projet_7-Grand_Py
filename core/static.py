@@ -628,13 +628,13 @@ PARSER_WIKI = ["[", "]", "|", "\n"]
 # TODO a terminer quand le site sera fonctionnel
 GRANDPA_WELCOME_PHRASE = ["Bonjour mon poussin, que voudrais-tu savoir aujourd'hui ?"]
 
-GRANDPA_START_ADDRESS = ["Bien mon poussin", "Ok ma caille", "Voilà mon petit"]
+GRANDPA_START_ADDRESS = ["Bien mon poussin", "Ok ma caille", "Voilà mon petit", "J'ai trouvé mon agneau"]
 GRANDPA_MEDIUM_ADDRESS = ["se trouve", "est", "se situe"]
-GRANDPA_END_ADDRESS = ["Observe la zone", "Regarde la carte", "Je te montre"]
+GRANDPA_END_ADDRESS = ["observe la zone", "regarde la carte", "je te montre"]
 
 GRANDPA_START_WIKI = [
     "Tiens cela me fait penser, tu verras",
     "D'ailleurs si je me trompe pas, tu peux observer",
-    "Pour le coup, dans la zone se trouve",
+    "Il me semble que dans la zone il se trouve"
 ]
 GRANDPA_MEDIUM_WIKI = ["à environ", "a peu pres à"]
