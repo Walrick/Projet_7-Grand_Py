@@ -7,12 +7,7 @@ import os
 import core.response_builder as papy
 
 
-# open file .env for key api
-with open(".env", "r") as file:
-    lines = file.readlines()
-for line in lines:
-    lg = line.split(" ")
-    os.environ[lg[0]] = lg[2]
+
 
 # Init Papy
 papy = papy.Papy()
@@ -42,3 +37,13 @@ def get_ajax():
 
 if __name__ == "__main__":
     app.run()
+
+
+def setup_local():
+
+    # open file .env for key api
+    with open(".env", "r") as file:
+        lines = file.readlines()
+    for line in lines:
+        lg = line.split(" ")
+        os.environ[lg[0]] = lg[2]
