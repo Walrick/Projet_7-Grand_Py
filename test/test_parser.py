@@ -99,6 +99,25 @@ def param_text_special():
     ]
 
 
+@pytest.fixture
+def param_hook():
+    return [
+        "[[Tramway]]",
+        "La",
+        "ligne",
+        "[[Tramway",
+        "d'Île-de-France/correspondances",
+        "avec",
+        "intitulé|3b]]",
+        "du",
+        "tramway",
+        "passe",
+        "sur",
+        "ce",
+        "quai.",
+    ]
+
+
 class TestParser:
     parser = parser_file.Parser()
 
@@ -176,3 +195,17 @@ class TestParser:
             text
             == "Il fait face au quai de la Charente, commence au quai de l'Oise et se termine avenue Corentin-Cariou. La ligne du tramway passe sur ce quai."
         )
+
+    def test_remove_hook(self, param_hook):
+        text = self.parser.remove_hook(param_hook)
+        assert text == [
+            "La",
+            "ligne",
+            "3b",
+            "du",
+            "tramway",
+            "passe",
+            "sur",
+            "ce",
+            "quai.",
+        ]

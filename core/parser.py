@@ -37,9 +37,9 @@ class Parser:
         :param text: str
         :return: str
         """
-        # découpe le fichier apres les ==
+
         text_raw = text.split("==")
-        # sélectionne le texte n°2
+        # select the section two
         index_section = 2
 
         text_list = self.change_type(text_raw[index_section])
@@ -198,5 +198,26 @@ class Parser:
             word = text[i - 1] + text[i]
             text[i - 1] = word
             del text[i]
+
+        return text
+
+    @staticmethod
+    def remove_hook(text):
+
+        index_start = []
+        index_end = []
+        index_column = []
+        index = 0
+        for word in text:
+            if "[[" in word:
+                index_start.append(index)
+            elif "|" in word:
+                index_column.append(index)
+            elif "]]" in word:
+                index_end.append(index)
+            index += 1
+        print(index_column)
+
+
 
         return text
