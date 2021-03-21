@@ -110,11 +110,11 @@ def param_hook():
         "avec",
         "intitulé|3b]]",
         "du",
-        "tramway",
+        "[[tramway",
         "passe",
         "sur",
         "ce",
-        "quai.",
+        "quai.]]",
     ]
 
 
@@ -199,6 +199,7 @@ class TestParser:
     def test_remove_hook(self, param_hook):
         text = self.parser.remove_hook(param_hook)
         assert text == [
+            "Tramway",
             "La",
             "ligne",
             "3b",

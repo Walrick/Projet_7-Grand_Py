@@ -206,18 +206,81 @@ class Parser:
 
         index_start = []
         index_end = []
-        index_column = []
         index = 0
         for word in text:
             if "[[" in word:
                 index_start.append(index)
-            elif "|" in word:
-                index_column.append(index)
-            elif "]]" in word:
+            if "]]" in word:
                 index_end.append(index)
             index += 1
-        print(index_column)
+        index_start.reverse()
+        index_end.reverse()
 
+        if len(index_start) == len(index_end):
+            nb_index = len(index_start)
+            for i in range(0, nb_index):
+                if index_start[i] == index_end[i]:
+                    # if word is type : [[Tramway]] or [[Tramway|paris]]
+                    if "|" in text[index_start[i]]:
+                        word_list = list(text[index_start[i]])
+                        stick_index = word_list.index("|")
+                        word = "".join(word_list[stick_index:-2])
+                        text[index_start[i]] = word
+                    else:
+                        word_list = list(text[index_start[i]])
+                        word = "".join(word_list[2:-2])
+                        text[index_start[i]] = word
 
+                else:
+                    # if word is type : [[Tramway, word.., paris]] or [[Tramway, word, word|paris, word]]
+                    word_list = text[index_start[i] : index_end[i] + 1]
+                    print("base : ", word_list)
+                    stick = False
+                    index = 0
+                    for word in word_list:
+                        if "|" in word:
+                            stick = True
+                            stick_index = index
+                        index += 1
+
+                    if stick:
+                        list_finish = []
+                        lg_tot = len(word_list)
+                        word_list = word_list[stick_index:]
+                        for word in word_list:
+                            print(word)
+                            if "|" in word:
+                                good_word = word.split("|")[1]
+                                if "]]" in word:
+                                    good_word = good_word.split("]]")[0]
+                                    list_finish.append(good_word)
+                                else:
+                                    list_finish.append(good_word)
+                            elif "]]" in word:
+                                good_word = word.split("]]")[0]
+                                list_finish.append(good_word)
+                            else:
+                                list_finish.append(word)
+
+                        lg_list_finish = len(list_finish)
+                        lg_word_list = len(word_list)
+                        index = 0
+                        print(lg_list_finish, list_finish, lg_word_list, word_list)
+                        for j in range(index_start[i], index_start[i] + lg_list_finish):
+                            text[j] = list_finish[index]
+                            index += 1
+
+                        lg_sup = lg_tot - lg_list_finish
+                        del text[
+                            index_start[i]
+                            + lg_list_finish : index_start[i]
+                            + lg_sup
+                            + 1
+                        ]
+
+                    else:
+
+                        text[index_start[i]] = text[index_start[i]].split("[[")[1]
+                        text[index_end[i]] = text[index_end[i]].split("]]")[0]
 
         return text
