@@ -43,25 +43,27 @@ class Parser:
         index_section = 2
 
         text_list = self.change_type(text_raw[index_section])
-        text_list_raw_p = self.remove_hook(text_list)
-        text_list_raw_a = self.remove_letter(text_list_raw_p, self.stop_wiki)
-        text_list_raw_s = self.remove_space(text_list_raw_a)
+        text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
+        text_list_raw_sp_two = self.remove_special(text_list_raw_sp_one, ["{{", "}}"])
+        text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+        text_list_raw_s = self.remove_space(text_list_raw_l)
         text_str = " ".join(text_list_raw_s)
         text_list = self.change_type(text_str)
-        text_list_raw = self.remove_special(text_list)
-        text_list = self.arranger_punctuation(text_list_raw)
+        text_list = self.arranger_punctuation(text_list)
         text_finish = " ".join(text_list)
         if text_finish != "":
             return text_finish
         else:
             text_list = self.change_type(text_raw[index_section + 2])
-            text_list_raw_p = self.remove_hook(text_list)
-            text_list_raw_p = self.remove_stop_word(text_list_raw_p, self.stop_wiki)
-            text_list_raw_s = self.remove_space(text_list_raw_p)
+            text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
+            text_list_raw_sp_two = self.remove_special(
+                text_list_raw_sp_one, ["{{", "}}"]
+            )
+            text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+            text_list_raw_s = self.remove_space(text_list_raw_l)
             text_str = " ".join(text_list_raw_s)
             text_list = self.change_type(text_str)
-            text_list_raw = self.remove_special(text_list)
-            text_list = self.arranger_punctuation(text_list_raw)
+            text_list = self.arranger_punctuation(text_list)
             text_finish = " ".join(text_list)
         return text_finish
 
@@ -147,66 +149,11 @@ class Parser:
         return text_finish
 
     @staticmethod
-    def remove_special(text):
+    def remove_special(text, special_word):
         """
-        The remove_special method removes the word type ..., {{word, word, word}}, ...
-        :param text: list
-        :return: text (list)
-        """
-        # TODO prendre en compte si une "|" est présent pour l'ajouter au texte
-        index_start = []
-        index_end = []
-        index = 0
-        for word in text:
-            if "{{" in word:
-                index_start.append(index)
-            if "}}" in word:
-                index_end.append(index)
-            index += 1
-
-        index_start.reverse()
-        index_end.reverse()
-
-        if len(index_start) == len(index_end):
-            nb_index = len(index_start)
-            for i in range(0, nb_index):
-                if index_start[i] == index_end[i]:
-                    del text[index_start[i]]
-                else:
-                    del text[index_start[i] : index_end[i] + 1]
-
-        return text
-
-    @staticmethod
-    def arranger_punctuation(text):
-        """
-        The arranger_punctuation method arranges the punctuation
-        :param text: list
-        :return: text (list)
-        """
-
-        punctuation = [".", ","]
-        index_word = []
-        index = 0
-        for word in text:
-            if word in punctuation:
-                if len(word) == 1:
-                    index_word.append(index)
-            index += 1
-
-        index_word.reverse()
-
-        for i in index_word:
-            word = text[i - 1] + text[i]
-            text[i - 1] = word
-            del text[i]
-
-        return text
-
-    @staticmethod
-    def remove_hook(text):
-        """
-        This method remove the double hook and keep the keyword
+        The remove_special method removes the word type {{word, word, word}} or [[word, word, word]] and
+        record the word {{word, word, word|special_word}} in special_word or [[word, word, word|special_word]]
+        :param special_word: list
         :param text: list
         :return: text (list)
         """
@@ -216,9 +163,9 @@ class Parser:
         index = 0
         # record the index
         for word in text:
-            if "[[" in word:
+            if special_word[0] in word:
                 index_start.append(index)
-            if "]]" in word:
+            if special_word[1] in word:
                 index_end.append(index)
             index += 1
         index_start.reverse()
@@ -257,13 +204,13 @@ class Parser:
                         for word in word_list:
                             if "|" in word:
                                 good_word = word.split("|")[1]
-                                if "]]" in word:
-                                    good_word = good_word.split("]]")[0]
+                                if special_word[1] in word:
+                                    good_word = good_word.split(special_word[1])[0]
                                     list_finish.append(good_word)
                                 else:
                                     list_finish.append(good_word)
-                            elif "]]" in word:
-                                good_word = word.split("]]")[0]
+                            elif special_word[1] in word:
+                                good_word = word.split(special_word[1])[0]
                                 list_finish.append(good_word)
                             else:
                                 list_finish.append(word)
@@ -284,15 +231,43 @@ class Parser:
 
                     else:
 
-                        text[index_start[i]] = text[index_start[i]].split("[[")[1]
+                        text[index_start[i]] = text[index_start[i]].split(special_word[0])[
+                            1
+                        ]
                         text[index_end[i]] = (
-                            text[index_end[i]].split("]]")[0]
-                            + text[index_end[i]].split("]]")[1]
+                            text[index_end[i]].split(special_word[1])[0]
+                            + text[index_end[i]].split(special_word[1])[1]
                         )
 
         elif len(index_start) != len(index_end):
 
             pass
             # TODO a terminer
+
+        return text
+
+    @staticmethod
+    def arranger_punctuation(text):
+        """
+        The arranger_punctuation method arranges the punctuation
+        :param text: list
+        :return: text (list)
+        """
+
+        punctuation = [".", ","]
+        index_word = []
+        index = 0
+        for word in text:
+            if word in punctuation:
+                if len(word) == 1:
+                    index_word.append(index)
+            index += 1
+
+        index_word.reverse()
+
+        for i in index_word:
+            word = text[i - 1] + text[i]
+            text[i - 1] = word
+            del text[i]
 
         return text

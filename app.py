@@ -17,6 +17,7 @@ def setup_local():
         os.environ[lg[0]] = lg[2]
 
 
+# Init env local
 setup_local()
 
 # Init Papy

@@ -166,12 +166,48 @@ class TestParser:
             "?",
         ]
 
-    def test_remove_special(self, param_text_special):
-        text = self.parser.remove_special(param_text_special[0])
-        assert text == ["La", "ligne", "du", "tramway", "passe", "sur", "ce", "quai."]
+    def test_remove_special(self, param_text_special, param_hook):
+        text = self.parser.remove_special(param_text_special[0], ["{{", "}}"])
+        assert text == [
+            "La",
+            "ligne",
+            "3b",
+            "du",
+            "tramway",
+            "passe",
+            "sur",
+            "ce",
+            "quai.",
+        ]
 
-        text = self.parser.remove_special(param_text_special[1])
-        assert text == ["La", "ligne", "du", "tramway", "passe", "sur", "ce", "quai."]
+        text = self.parser.remove_special(param_text_special[1], ["{{", "}}"])
+        assert text == [
+            "Tramway",
+            "La",
+            "ligne",
+            "3b",
+            "du",
+            "tramway",
+            "passe",
+            "sur",
+            "ce",
+            "quai.",
+        ]
+
+        text = self.parser.remove_special(param_hook, ["[[", "]]"])
+        assert text == [
+            "Tramway",
+            "La",
+            "ligne",
+            "3b",
+            "du",
+            "tramway",
+            "passe",
+            "sur",
+            "ce",
+            "quai.",
+            "3b",
+        ]
 
     def test_arranger_punctuation(self, param_text_list_punctuation):
         text = self.parser.arranger_punctuation(param_text_list_punctuation)
@@ -194,21 +230,5 @@ class TestParser:
         text = self.parser.text_wiki(param_text_wiki)
         assert (
             text
-            == "Il fait face au quai de la Charente, commence au quai de l'Oise et se termine avenue Corentin-Cariou. La ligne du tramway passe sur ce quai."
+            == "Il fait face au quai de la Charente, commence au quai de l'Oise et se termine avenue Corentin-Cariou. La ligne 3b du tramway passe sur ce quai."
         )
-
-    def test_remove_hook(self, param_hook):
-        text = self.parser.remove_hook(param_hook)
-        assert text == [
-            "Tramway",
-            "La",
-            "ligne",
-            "3b",
-            "du",
-            "tramway",
-            "passe",
-            "sur",
-            "ce",
-            "quai.",
-            "3b",
-        ]
