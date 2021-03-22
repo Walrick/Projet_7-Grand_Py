@@ -43,8 +43,9 @@ class Parser:
         index_section = 2
 
         text_list = self.change_type(text_raw[index_section])
-        text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
-        text_list_raw_s = self.remove_space(text_list_raw_p)
+        text_list_raw_p = self.remove_hook(text_list)
+        text_list_raw_a = self.remove_letter(text_list_raw_p, self.stop_wiki)
+        text_list_raw_s = self.remove_space(text_list_raw_a)
         text_str = " ".join(text_list_raw_s)
         text_list = self.change_type(text_str)
         text_list_raw = self.remove_special(text_list)
@@ -54,7 +55,8 @@ class Parser:
             return text_finish
         else:
             text_list = self.change_type(text_raw[index_section + 2])
-            text_list_raw_p = self.remove_letter(text_list, self.stop_wiki)
+            text_list_raw_p = self.remove_hook(text_list)
+            text_list_raw_p = self.remove_stop_word(text_list_raw_p, self.stop_wiki)
             text_list_raw_s = self.remove_space(text_list_raw_p)
             text_str = " ".join(text_list_raw_s)
             text_list = self.change_type(text_str)
@@ -203,10 +205,16 @@ class Parser:
 
     @staticmethod
     def remove_hook(text):
+        """
+        This method remove the double hook and keep the keyword
+        :param text: list
+        :return: text (list)
+        """
 
         index_start = []
         index_end = []
         index = 0
+        # record the index
         for word in text:
             if "[[" in word:
                 index_start.append(index)
@@ -224,7 +232,7 @@ class Parser:
                     if "|" in text[index_start[i]]:
                         word_list = list(text[index_start[i]])
                         stick_index = word_list.index("|")
-                        word = "".join(word_list[stick_index:-2])
+                        word = "".join(word_list[stick_index + 1 : -2])
                         text[index_start[i]] = word
                     else:
                         word_list = list(text[index_start[i]])
@@ -234,7 +242,6 @@ class Parser:
                 else:
                     # if word is type : [[Tramway, word.., paris]] or [[Tramway, word, word|paris, word]]
                     word_list = text[index_start[i] : index_end[i] + 1]
-                    print("base : ", word_list)
                     stick = False
                     index = 0
                     for word in word_list:
@@ -248,7 +255,6 @@ class Parser:
                         lg_tot = len(word_list)
                         word_list = word_list[stick_index:]
                         for word in word_list:
-                            print(word)
                             if "|" in word:
                                 good_word = word.split("|")[1]
                                 if "]]" in word:
@@ -263,9 +269,7 @@ class Parser:
                                 list_finish.append(word)
 
                         lg_list_finish = len(list_finish)
-                        lg_word_list = len(word_list)
                         index = 0
-                        print(lg_list_finish, list_finish, lg_word_list, word_list)
                         for j in range(index_start[i], index_start[i] + lg_list_finish):
                             text[j] = list_finish[index]
                             index += 1
@@ -281,6 +285,14 @@ class Parser:
                     else:
 
                         text[index_start[i]] = text[index_start[i]].split("[[")[1]
-                        text[index_end[i]] = text[index_end[i]].split("]]")[0]
+                        text[index_end[i]] = (
+                            text[index_end[i]].split("]]")[0]
+                            + text[index_end[i]].split("]]")[1]
+                        )
+
+        elif len(index_start) != len(index_end):
+
+            pass
+            # TODO a terminer
 
         return text

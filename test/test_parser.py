@@ -115,6 +115,7 @@ def param_hook():
         "sur",
         "ce",
         "quai.]]",
+        "[[intitulé|3b]]",
     ]
 
 
@@ -209,4 +210,5 @@ class TestParser:
             "sur",
             "ce",
             "quai.",
+            "3b",
         ]

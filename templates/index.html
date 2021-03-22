@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,6 +8,9 @@
 
     <title>PapyBot</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename= 'image/ico_papy.png') }}" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 
 </head>
@@ -43,7 +44,7 @@
 
 
     <footer>
-        <p> Ce site a été réalisé avec Html, css et Javascript.
+        <p> Ce site a été réalisé avec Html, CSS et Javascript pour le front end et avec Flask / Python pour le back end.
         <br>  &copy; 2021 COMBES Jérémy, tous droits réservés. </p>
         <div class="fontesome">
             <a href="https://github.com/Walrick/Projet_7-Grand_Py" target="_blank"> <i class="fab fa-github"></i> </a>
@@ -53,6 +54,8 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script src="{{ url_for('static', filename= 'js/bootstrap.js') }}"></script>
 
 <script src="{{ url_for('static', filename= 'js/script.js') }}"></script>
 

@@ -34,26 +34,6 @@ main {
     flex-direction: column;
 }
 
-.computer {
-    display: flex;
-    align-items: center;
-    background: #4040DD;
-    width: 35%;
-    margin-bottom: 14px;
-    padding: 8px;
-    border-radius: 6px;
-    color: white;
-}
-
-.user {
-    align-self: flex-end;
-    background: #868686;
-    width: 35%;
-    margin-bottom: 14px;
-    padding: 8px;
-    border-radius: 6px;
-    color: white;
-}
 #inp {
     flex-grow: 3;
     border-radius: 10px;
@@ -71,7 +51,6 @@ main {
     flex-direction: row;
 
 }
-
 
 .fab {
     color : #f3ecec;
@@ -94,4 +73,104 @@ main {
     flex-grow: 0.2;
     transform-origin: 50% 50%;
     -webkit-animation: rotating 2s linear infinite;
+}
+
+@media all and (min-width: 200px) and (max-width: 400px) {
+    .computer {
+        display: flex;
+        align-items: center;
+        background: #4040DD;
+        width: 95%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: #868686;
+        width: 95%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+}
+
+@media all and (min-width: 401px) and (max-width: 600px) {
+    .computer {
+        display: flex;
+        align-items: center;
+        background: #4040DD;
+        width: 75%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: #868686;
+        width: 75%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+}
+
+@media all and (min-width: 601px) and (max-width: 800px) {
+    .computer {
+        display: flex;
+        align-items: center;
+        background: #4040DD;
+        width: 55%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: #868686;
+        width: 55%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+}
+
+@media all and (min-width: 801px){
+    .computer {
+        display: flex;
+        align-items: center;
+        background: #4040DD;
+        width: 40%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: #868686;
+        width: 40%;
+        margin-bottom: 14px;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        text-align: center;
+    }
 }
