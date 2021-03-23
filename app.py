@@ -16,7 +16,7 @@ def setup_local():
         lg = line.split(" ")
         os.environ[lg[0]] = lg[2]
 
-
+setup_local()
 # Init Papy
 papy = papy.Papy()
 

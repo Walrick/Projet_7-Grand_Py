@@ -51,9 +51,9 @@ class Parser:
         text_list = self.change_type(text_str)
         text_list = self.arranger_punctuation(text_list)
         text_finish = " ".join(text_list)
-        if text_finish != "":
-            return text_finish
-        else:
+
+        if text_finish == "" or text_finish == "...":
+
             text_list = self.change_type(text_raw[index_section + 2])
             text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
             text_list_raw_sp_two = self.remove_special(
@@ -65,7 +65,12 @@ class Parser:
             text_list = self.change_type(text_str)
             text_list = self.arranger_punctuation(text_list)
             text_finish = " ".join(text_list)
-        return text_finish
+
+            return text_finish
+
+        else:
+
+            return text_finish
 
     @staticmethod
     def change_type(text):
@@ -231,9 +236,9 @@ class Parser:
 
                     else:
 
-                        text[index_start[i]] = text[index_start[i]].split(special_word[0])[
-                            1
-                        ]
+                        text[index_start[i]] = text[index_start[i]].split(
+                            special_word[0]
+                        )[1]
                         text[index_end[i]] = (
                             text[index_end[i]].split(special_word[1])[0]
                             + text[index_end[i]].split(special_word[1])[1]

@@ -625,7 +625,6 @@ PUNCTUATION = ["!", "?", ",", ".", ";", ":", "'"]
 
 PARSER_WIKI = ["[", "]", "|", "\n", "{", "}"]
 
-# TODO a terminer quand le site sera fonctionnel
 GRANDPA_WELCOME_PHRASE = ["Bonjour mon poussin, que voudrais-tu savoir aujourd'hui ?"]
 
 GRANDPA_START_ADDRESS = [
