@@ -22,19 +22,23 @@ class Parser:
     @staticmethod
     def remove_stop_word(text, stop_word_list):
         """
-        The Remove_stop_word method removes the stop word from the list and makes removes all caps
+        The Remove_stop_word method removes the stop word from the list and
+        makes removes all caps
         :param text: list
         :param stop_word_list: list
         :return: text_finish (list)
         """
-        text_finish = [word for word in text if not word.lower() in stop_word_list]
+        text_finish = (
+            [word for word in text if not word.lower() in stop_word_list]
+        )
 
         return text_finish
 
     @staticmethod
     def remove_letter(text, letter_list):
         """
-        The remove_letter method removes the characters contained in the letter_list
+        The remove_letter method removes
+        the characters contained in the letter_list
         :param text: list
         :param letter_list: list
         :return: text_finish (list)
@@ -97,14 +101,15 @@ class ParserUser(Parser):
         if index == "NONE":
             self.research = self.text_list
         else:
-            self.research = self.text_list[(index + 1) :]
+            self.research = self.text_list[(index + 1):]
 
         return " ".join(self.research)
 
     @staticmethod
     def find_index_research(text, address_word_list):
         """
-        The find_index_research method searches for a keyword contained in the list address_word_list
+        The find_index_research method searches for a keyword
+        contained in the list address_word_list
         :param text: list
         :param address_word_list: list
         :return: index_address (int or "NONE")
@@ -126,7 +131,8 @@ class ParserWiki(Parser):
 
     def text_wiki(self, text):
         """
-        the text_wiki method searches for the text to display from the return of the wikipedia API
+        the text_wiki method searches for the text to display
+        from the return of the wikipedia API
         :param text: str
         :return: str
         """
@@ -137,8 +143,10 @@ class ParserWiki(Parser):
 
         text_list = self.change_type(text_raw[index_section])
         text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
-        text_list_raw_sp_two = self.remove_special(text_list_raw_sp_one, ["{{", "}}"])
-        text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+        text_list_raw_sp_two = self.remove_special(
+            text_list_raw_sp_one, ["{{", "}}"])
+        text_list_raw_l = self.remove_letter(
+            text_list_raw_sp_two, self.stop_wiki)
         text_list_raw_s = self.remove_space(text_list_raw_l)
         text_str = " ".join(text_list_raw_s)
         text_list = self.change_type(text_str)
@@ -148,11 +156,13 @@ class ParserWiki(Parser):
         if text_finish == "" or text_finish == "...":
 
             text_list = self.change_type(text_raw[index_section + 2])
-            text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
+            text_list_raw_sp_one = self.remove_special(
+                text_list, ["[[", "]]"])
             text_list_raw_sp_two = self.remove_special(
                 text_list_raw_sp_one, ["{{", "}}"]
             )
-            text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+            text_list_raw_l = self.remove_letter(
+                text_list_raw_sp_two, self.stop_wiki)
             text_list_raw_s = self.remove_space(text_list_raw_l)
             text_str = " ".join(text_list_raw_s)
             text_list = self.change_type(text_str)
@@ -168,8 +178,10 @@ class ParserWiki(Parser):
     @staticmethod
     def remove_special(text, special_word):
         """
-        The remove_special method removes the word type {{word, word, word}} or [[word, word, word]] and
-        record the word {{word, word, word|special_word}} in special_word or [[word, word, word|special_word]]
+        The remove_special method removes the word type
+        {{word, word, word}} or [[word, word, word]] and
+        record the word {{word, word, word|special_word}} in special_word or
+        [[word, word, word|special_word]]
         :param special_word: list
         :param text: list
         :return: text (list)
@@ -196,7 +208,7 @@ class ParserWiki(Parser):
                     if "|" in text[index_start[i]]:
                         word_list = list(text[index_start[i]])
                         stick_index = word_list.index("|")
-                        word = "".join(word_list[stick_index + 1 : -2])
+                        word = "".join(word_list[stick_index + 1: -2])
                         text[index_start[i]] = word
                     else:
                         word_list = list(text[index_start[i]])
@@ -204,8 +216,9 @@ class ParserWiki(Parser):
                         text[index_start[i]] = word
 
                 else:
-                    # if word is type : [[Tramway, word.., paris]] or [[Tramway, word, word|paris, word]]
-                    word_list = text[index_start[i] : index_end[i] + 1]
+                    # if word is type : [[Tramway, word.., paris]] or
+                    # [[Tramway, word, word|paris, word]]
+                    word_list = text[index_start[i]: index_end[i] + 1]
                     stick = False
                     index = 0
                     for word in word_list:
@@ -222,7 +235,8 @@ class ParserWiki(Parser):
                             if "|" in word:
                                 good_word = word.split("|")[1]
                                 if special_word[1] in word:
-                                    good_word = good_word.split(special_word[1])[0]
+                                    good_word = good_word.split(
+                                        special_word[1])[0]
                                     list_finish.append(good_word)
                                 else:
                                     list_finish.append(good_word)
@@ -234,14 +248,16 @@ class ParserWiki(Parser):
 
                         lg_list_finish = len(list_finish)
                         index = 0
-                        for j in range(index_start[i], index_start[i] + lg_list_finish):
+                        for j in range(
+                                index_start[i], index_start[i] + lg_list_finish
+                        ):
                             text[j] = list_finish[index]
                             index += 1
 
                         lg_sup = lg_tot - lg_list_finish
                         del text[
                             index_start[i]
-                            + lg_list_finish : index_start[i]
+                            + lg_list_finish:index_start[i]
                             + lg_sup
                             + 1
                         ]

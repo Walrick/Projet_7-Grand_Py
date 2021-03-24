@@ -13,7 +13,8 @@ def http_return(mocker):
     results = {
         "candidates": [
             {
-                "formatted_address": "10 Quai de la Charente, 75019 Paris, France",
+                "formatted_address":
+                    "10 Quai de la Charente, 75019 Paris, France",
                 "geometry": {
                     "location": {"lat": 48.8975156, "lng": 2.3833993},
                     "viewport": {
@@ -33,7 +34,9 @@ def http_return(mocker):
         "status": "OK",
     }
     return mocker.patch(
-        "urllib.request.urlopen", return_value=BytesIO(json.dumps(results).encode())
+        "urllib.request.urlopen", return_value=BytesIO(
+            json.dumps(results).encode()
+        )
     )
 
 
@@ -43,8 +46,11 @@ class TestApiGoogle:
     def test_google_place_request(self, http_return):
         result = self.api_google.google_place_request("test au hasard")
         assert (
-            result["formatted_address"] == "10 Quai de la Charente, 75019 Paris, France"
+                result["formatted_address"] ==
+                "10 Quai de la Charente, 75019 Paris, France"
         )
         http_return.assert_called_once_with(
-            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=test+au+hasard&inputtype=textquery&fields=formatted_address%2Cname%2Cgeometry&key=None"
+            "https://maps.googleapis.com/maps/api/place/findplacefromtext/"
+            + "json?input=test+au+hasard&inputtype"
+            + "=textquery&fields=formatted_address%2Cname%2Cgeometry&key=None"
         )

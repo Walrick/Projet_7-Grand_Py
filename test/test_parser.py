@@ -61,7 +61,26 @@ def param_text_list_punctuation():
 
 @pytest.fixture
 def param_text_wiki():
-    return "{{Ébauche|Paris}}\n{{Infobox Voie parisienne\n | num arr        = {{19e}}\n | nom            = Quai de la Gironde\n | latitude       = 48.8965\n | longitude      = 2.383164\n | arrondissement = [[19e arrondissement de Paris|19{{e}}]]\n | quartier       = \n | début          = [[Quai de l'Oise]]\n | fin            = [[Boulevard Macdonald]]\n | longueur       = 740\n | largeur        = 5\n | création       = 1863\n | dénomination   = 1873\n | ancien nom     = \n | photo          = Quai de la Gironde à Paris 12.jpg\n | légende        = \n | Ville de Paris = 4147\n | DGI            = 4197\n | commons        = Category:Quai de la Gironde (Paris)\n}}\nLe '''quai de la Gironde''' est un quai situé le long du [[canal Saint-Denis]], à [[Paris]], dans le [[19e arrondissement de Paris|{{19e|arrondissement}}]].\n\n== Situation et accès ==\nIl fait face au [[quai de la Charente]], commence au [[quai de l'Oise]] et se termine [[avenue Corentin-Cariou]].\n\nLa ligne {{Tramway d'Île-de-France/correspondances avec intitulé|3b}} du tramway passe sur ce quai.\n\n== Origine du nom ==\nLe quai porte le [[Estuaire de la Gironde|nom]] que prend le fleuve, la [[Garonne]]"
+    return "{{Ébauche|Paris}}\n{{Infobox Voie parisienne\n | num arr /   \
+        = {{19e}}\n | nom            = Quai de la Gironde\n | latitude    \
+        = 48.8965\n | longitude      = 2.383164\n | arrondissement = \
+        [[19e arrondissement de Paris|19{{e}}]]\n | quartier       = \n \
+        | début          = [[Quai de l'Oise]]\n | fin            \
+        = [[Boulevard Macdonald]]\n | longueur       = 740\n | largeur  \
+        = 5\n | création       = 1863\n | dénomination   = 1873\n | \
+        ancien nom     = \n | photo          = Quai de la \
+        Gironde à Paris 12.jpg\n | légende        = \n | Ville de \
+        Paris = 4147\n | DGI            = 4197\n | commons       \
+        = Category:Quai de la Gironde (Paris)\n}}\nLe \
+        '''quai de la Gironde''' est un quai situé le long du [[canal \
+        Saint-Denis]], à [[Paris]], dans le [[19e arrondissement de\
+        Paris|{{19e|arrondissement}}]].\n\n== Situation et accès \
+        ==\nIl fait face au [[quai de la Charente]], commence au \
+        [[quai de l'Oise]] et se termine [[avenue Corentin-Cariou]].\
+        \n\nLa ligne {{Tramway d'Île-de-France/correspondances avec \
+        intitulé|3b}} du tramway passe sur ce quai.\n\n== Origine du \
+        nom ==\nLe quai porte le [[Estuaire de la Gironde|nom]] que \
+        prend le fleuve, la [[Garonne]]"
 
 
 @pytest.fixture
@@ -141,7 +160,9 @@ class TestParser:
         assert index_text == 6
 
     def test_remove_letter(self, param_text_list):
-        text = self.parser_user.remove_letter(param_text_list, self.parser_user.punctuation)
+        text = self.parser_user.remove_letter(
+            param_text_list, self.parser_user.punctuation
+        )
         assert text == [
             "Salut",
             "GrandPy",
@@ -169,7 +190,8 @@ class TestParser:
         ]
 
     def test_remove_special(self, param_text_special, param_hook):
-        text = self.parser_wiki.remove_special(param_text_special[0], ["{{", "}}"])
+        text = self.parser_wiki.remove_special(
+            param_text_special[0], ["{{", "}}"])
         assert text == [
             "La",
             "ligne",
@@ -182,7 +204,8 @@ class TestParser:
             "quai.",
         ]
 
-        text = self.parser_wiki.remove_special(param_text_special[1], ["{{", "}}"])
+        text = self.parser_wiki.remove_special(
+            param_text_special[1], ["{{", "}}"])
         assert text == [
             "Tramway",
             "La",
@@ -196,7 +219,8 @@ class TestParser:
             "quai.",
         ]
 
-        text = self.parser_wiki.remove_special(param_hook, ["[[", "]]"])
+        text = self.parser_wiki.remove_special(
+            param_hook, ["[[", "]]"])
         assert text == [
             "Tramway",
             "La",
@@ -212,7 +236,8 @@ class TestParser:
         ]
 
     def test_arranger_punctuation(self, param_text_list_punctuation):
-        text = self.parser_wiki.arranger_punctuation(param_text_list_punctuation)
+        text = self.parser_wiki.arranger_punctuation(
+            param_text_list_punctuation)
         assert text == [
             "Salut ",
             "GrandPy.",
@@ -231,6 +256,8 @@ class TestParser:
     def test_text_wiki(self, param_text_wiki):
         text = self.parser_wiki.text_wiki(param_text_wiki)
         assert (
-            text
-            == "Il fait face au quai de la Charente, commence au quai de l'Oise et se termine avenue Corentin-Cariou. La ligne 3b du tramway passe sur ce quai."
+                text ==
+                "Il fait face au quai de la Charente, commence au quai\
+             de l'Oise et se termine avenue Corentin-Cariou. La ligne \
+             3b du tramway passe sur ce quai."
         )

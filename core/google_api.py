@@ -47,7 +47,8 @@ class ApiGoogle:
                 if result["status"] == "OK":
                     return result["candidates"][0]
                 elif result["status"] != "UNKNOWN_ERROR":
-                    # Many API errors cannot be fixed by a retry, e.g. INVALID_REQUEST or
+                    # Many API errors cannot be fixed by a retry, e.g.
+                    # INVALID_REQUEST or
                     # ZERO_RESULTS. There is no point retrying these requests.
                     return "error_message"
 
@@ -65,7 +66,8 @@ class ApiGoogle:
         params = urllib.parse.urlencode(
             {
                 "center": f"{key_word}",
-                # 10 = zoom sur la ville, 15 = zoom sur la rue, 20 = zoom sur le bâtiment
+                # 10 = zoom sur la ville, 15 = zoom sur la rue,
+                # 20 = zoom sur le bâtiment
                 "zoom": "13.5",
                 "size": "300x300",
                 "markers": "red" + f"{key_word}",

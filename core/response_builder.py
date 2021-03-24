@@ -101,7 +101,9 @@ class Papy:
 
         # wiki answer
         wiki_p = self.wiki_api.wiki_geosearch(lat, lng)
-        wiki_t = self.wiki_api.wiki_get_text(wiki_p["query"]["geosearch"][0]["title"])
+        wiki_t = self.wiki_api.wiki_get_text(
+            wiki_p["query"]["geosearch"][0]["title"]
+        )
 
         distance = str(wiki_p["query"]["geosearch"][0]["dist"])
         title = wiki_p["query"]["geosearch"][0]["title"]
