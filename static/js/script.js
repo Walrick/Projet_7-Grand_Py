@@ -10,7 +10,7 @@ function pressEnter(event) {
 
 function check_text() {
     let phrase = document.getElementById("inp").value;
-    if (phrase != "" & phrase != " ") {
+    if (phrase !== "" & phrase !== " ") {
         document.getElementById("inp").value = "";
         if (request_in_progress === "False") {
             update_user(phrase)
@@ -30,7 +30,9 @@ function request_ajax(data_txt) {
     data: {'request_user' : data_txt},
     success : function(result) {
         update_papy_text(result.address)
-        update_papy_image(result.image)
+        if (result.image !== "") {
+            update_papy_image(result.image)
+        }
         update_papy_text(result.history)
         spinner_off()
         request_in_progress = "False"

@@ -121,6 +121,8 @@ def param_hook():
 
 class TestParser:
     parser = parser_file.Parser()
+    parser_user = parser_file.ParserUser()
+    parser_wiki = parser_file.ParserWiki()
 
     def test_change_type(self, param_text):
         text_list = self.parser.change_type(param_text)
@@ -133,13 +135,13 @@ class TestParser:
         assert self.parser.stop_word not in text_list_finish
 
     def test_find_index_research(self, param_text_list):
-        index_text = self.parser.find_index_research(
-            param_text_list, self.parser.address
+        index_text = self.parser_user.find_index_research(
+            param_text_list, self.parser_user.address
         )
         assert index_text == 6
 
     def test_remove_letter(self, param_text_list):
-        text = self.parser.remove_letter(param_text_list, self.parser.punctuation)
+        text = self.parser_user.remove_letter(param_text_list, self.parser_user.punctuation)
         assert text == [
             "Salut",
             "GrandPy",
@@ -167,7 +169,7 @@ class TestParser:
         ]
 
     def test_remove_special(self, param_text_special, param_hook):
-        text = self.parser.remove_special(param_text_special[0], ["{{", "}}"])
+        text = self.parser_wiki.remove_special(param_text_special[0], ["{{", "}}"])
         assert text == [
             "La",
             "ligne",
@@ -180,7 +182,7 @@ class TestParser:
             "quai.",
         ]
 
-        text = self.parser.remove_special(param_text_special[1], ["{{", "}}"])
+        text = self.parser_wiki.remove_special(param_text_special[1], ["{{", "}}"])
         assert text == [
             "Tramway",
             "La",
@@ -194,7 +196,7 @@ class TestParser:
             "quai.",
         ]
 
-        text = self.parser.remove_special(param_hook, ["[[", "]]"])
+        text = self.parser_wiki.remove_special(param_hook, ["[[", "]]"])
         assert text == [
             "Tramway",
             "La",
@@ -210,7 +212,7 @@ class TestParser:
         ]
 
     def test_arranger_punctuation(self, param_text_list_punctuation):
-        text = self.parser.arranger_punctuation(param_text_list_punctuation)
+        text = self.parser_wiki.arranger_punctuation(param_text_list_punctuation)
         assert text == [
             "Salut ",
             "GrandPy.",
@@ -223,11 +225,11 @@ class TestParser:
         ]
 
     def test_research_extractor(self, param_text):
-        research = self.parser.research_extractor(param_text)
+        research = self.parser_user.research_extractor(param_text)
         assert research == "OpenClassrooms"
 
     def test_text_wiki(self, param_text_wiki):
-        text = self.parser.text_wiki(param_text_wiki)
+        text = self.parser_wiki.text_wiki(param_text_wiki)
         assert (
             text
             == "Il fait face au quai de la Charente, commence au quai de l'Oise et se termine avenue Corentin-Cariou. La ligne 3b du tramway passe sur ce quai."

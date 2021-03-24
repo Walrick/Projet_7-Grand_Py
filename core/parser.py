@@ -7,70 +7,6 @@ import core.static as stop_word
 class Parser:
     def __init__(self):
         self.stop_word = stop_word.STOP_WORD
-        self.address = stop_word.ADDRESS
-        self.punctuation = stop_word.PUNCTUATION
-        self.stop_wiki = stop_word.PARSER_WIKI
-        self.text_list = self.raw_text = []
-        self.research = ""
-
-    def research_extractor(self, text):
-        """
-        Research_extractor extracts the search keyword from the phrase
-        :param text: str
-        :return: text (str)
-        """
-        text_list = self.change_type(text)
-        text_list_raw_p = self.remove_letter(text_list, self.punctuation)
-        text_list_raw_s = self.remove_space(text_list_raw_p)
-        self.text_list = self.remove_stop_word(text_list_raw_s, self.stop_word)
-        index = self.find_index_research(self.text_list, self.address)
-        if index == "NONE":
-            self.research = self.text_list
-        else:
-            self.research = self.text_list[(index + 1) :]
-
-        return " ".join(self.research)
-
-    def text_wiki(self, text):
-        """
-        the text_wiki method searches for the text to display from the return of the wikipedia API
-        :param text: str
-        :return: str
-        """
-
-        text_raw = text.split("==")
-        # select the section two
-        index_section = 2
-
-        text_list = self.change_type(text_raw[index_section])
-        text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
-        text_list_raw_sp_two = self.remove_special(text_list_raw_sp_one, ["{{", "}}"])
-        text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
-        text_list_raw_s = self.remove_space(text_list_raw_l)
-        text_str = " ".join(text_list_raw_s)
-        text_list = self.change_type(text_str)
-        text_list = self.arranger_punctuation(text_list)
-        text_finish = " ".join(text_list)
-
-        if text_finish == "" or text_finish == "...":
-
-            text_list = self.change_type(text_raw[index_section + 2])
-            text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
-            text_list_raw_sp_two = self.remove_special(
-                text_list_raw_sp_one, ["{{", "}}"]
-            )
-            text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
-            text_list_raw_s = self.remove_space(text_list_raw_l)
-            text_str = " ".join(text_list_raw_s)
-            text_list = self.change_type(text_str)
-            text_list = self.arranger_punctuation(text_list)
-            text_finish = " ".join(text_list)
-
-            return text_finish
-
-        else:
-
-            return text_finish
 
     @staticmethod
     def change_type(text):
@@ -94,22 +30,6 @@ class Parser:
         text_finish = [word for word in text if not word.lower() in stop_word_list]
 
         return text_finish
-
-    @staticmethod
-    def find_index_research(text, address_word_list):
-        """
-        The find_index_research method searches for a keyword contained in the list address_word_list
-        :param text: list
-        :param address_word_list: list
-        :return: index_address (int or "NONE")
-        """
-        index_address = "NONE"
-        for word_text in text:
-            for word_address in address_word_list:
-                if word_address == word_text:
-                    index_address = text.index(word_address)
-
-        return index_address
 
     @staticmethod
     def remove_letter(text, letter_list):
@@ -152,6 +72,98 @@ class Parser:
             if word != "":
                 text_finish.append(word)
         return text_finish
+
+
+class ParserUser(Parser):
+    def __init__(self):
+
+        super().__init__()
+        self.address = stop_word.ADDRESS
+        self.punctuation = stop_word.PUNCTUATION
+        self.text_list = self.raw_text = []
+        self.research = ""
+
+    def research_extractor(self, text):
+        """
+        Research_extractor extracts the search keyword from the phrase
+        :param text: str
+        :return: text (str)
+        """
+        text_list = self.change_type(text)
+        text_list_raw_p = self.remove_letter(text_list, self.punctuation)
+        text_list_raw_s = self.remove_space(text_list_raw_p)
+        self.text_list = self.remove_stop_word(text_list_raw_s, self.stop_word)
+        index = self.find_index_research(self.text_list, self.address)
+        if index == "NONE":
+            self.research = self.text_list
+        else:
+            self.research = self.text_list[(index + 1) :]
+
+        return " ".join(self.research)
+
+    @staticmethod
+    def find_index_research(text, address_word_list):
+        """
+        The find_index_research method searches for a keyword contained in the list address_word_list
+        :param text: list
+        :param address_word_list: list
+        :return: index_address (int or "NONE")
+        """
+        index_address = "NONE"
+        for word_text in text:
+            for word_address in address_word_list:
+                if word_address == word_text:
+                    index_address = text.index(word_address)
+
+        return index_address
+
+
+class ParserWiki(Parser):
+    def __init__(self):
+
+        super().__init__()
+        self.stop_wiki = stop_word.PARSER_WIKI
+
+    def text_wiki(self, text):
+        """
+        the text_wiki method searches for the text to display from the return of the wikipedia API
+        :param text: str
+        :return: str
+        """
+
+        text_raw = text.split("==")
+        # select the section two
+        index_section = 2
+
+        text_list = self.change_type(text_raw[index_section])
+        text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
+        text_list_raw_sp_two = self.remove_special(text_list_raw_sp_one, ["{{", "}}"])
+        text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+        text_list_raw_s = self.remove_space(text_list_raw_l)
+        text_str = " ".join(text_list_raw_s)
+        text_list = self.change_type(text_str)
+        text_list = self.arranger_punctuation(text_list)
+        text_finish = " ".join(text_list)
+
+        if text_finish == "" or text_finish == "...":
+
+            text_list = self.change_type(text_raw[index_section + 2])
+            text_list_raw_sp_one = self.remove_special(text_list, ["[[", "]]"])
+            text_list_raw_sp_two = self.remove_special(
+                text_list_raw_sp_one, ["{{", "}}"]
+            )
+            text_list_raw_l = self.remove_letter(text_list_raw_sp_two, self.stop_wiki)
+            text_list_raw_s = self.remove_space(text_list_raw_l)
+            text_str = " ".join(text_list_raw_s)
+            text_list = self.change_type(text_str)
+            text_list = self.arranger_punctuation(text_list)
+            text_finish = " ".join(text_list)
+
+            return text_finish
+
+        else:
+
+            return text_finish
 
     @staticmethod
     def remove_special(text, special_word):

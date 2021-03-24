@@ -12,7 +12,8 @@ import core.static as static
 class Papy:
     def __init__(self):
 
-        self.parser = parser.Parser()
+        self.parser_user = parser.ParserUser()
+        self.parser_wiki = parser.ParserWiki()
         self.google_api = google_api.ApiGoogle()
         self.wiki_api = wiki_api.ApiWiki()
 
@@ -31,7 +32,7 @@ class Papy:
         """
 
         # keyword research
-        key_word = self.parser.research_extractor(text)
+        key_word = self.parser_user.research_extractor(text)
 
         # google answer
         response_google = self.google_api.google_place_request(key_word)
@@ -106,7 +107,7 @@ class Papy:
         title = wiki_p["query"]["geosearch"][0]["title"]
 
         # Parse the text
-        text_wiki = self.parser.text_wiki(wiki_t["parse"]["wikitext"])
+        text_wiki = self.parser_wiki.text_wiki(wiki_t["parse"]["wikitext"])
 
         text = (
             static.GRANDPA_START_WIKI[index_start]
