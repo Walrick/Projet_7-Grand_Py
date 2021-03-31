@@ -219,8 +219,7 @@ class TestParser:
             "quai.",
         ]
 
-        text = self.parser_wiki.remove_special(
-            param_hook, ["[[", "]]"])
+        text = self.parser_wiki.remove_special(param_hook, ["[[", "]]"])
         assert text == [
             "Tramway",
             "La",
@@ -256,8 +255,9 @@ class TestParser:
     def test_text_wiki(self, param_text_wiki):
         text = self.parser_wiki.text_wiki(param_text_wiki)
         assert (
-                text ==
-                "Il fait face au quai de la Charente, commence au quai\
-             de l'Oise et se termine avenue Corentin-Cariou. La ligne \
-             3b du tramway passe sur ce quai."
+            text
+            == "Il fait face au quai de la Charente, "
+            + "commence au quai de l'Oise et se "
+            + "termine avenue Corentin-Cariou. "
+            + "La ligne 3b du tramway passe sur ce quai."
         )
